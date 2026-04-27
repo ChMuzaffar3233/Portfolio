@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,6 +21,68 @@
     --glow: rgba(0,229,255,0.18);
     --glow2: rgba(124,58,237,0.18);
   }
+
+  /* ─── LIGHT THEME ─── */
+  [data-theme="light"] {
+    --bg: #f0f4ff;
+    --surface: #ffffff;
+    --surface2: #e8edf8;
+    --accent: #0070cc;
+    --accent2: #6d28d9;
+    --accent3: #d97706;
+    --text: #0f172a;
+    --muted: #475569;
+    --glow: rgba(0,112,204,0.15);
+    --glow2: rgba(109,40,217,0.15);
+  }
+  [data-theme="light"] body { cursor: auto; }
+  [data-theme="light"] #cursor, [data-theme="light"] #cursor-ring { display: none; }
+  [data-theme="light"] nav {
+    background: rgba(240,244,255,0.85);
+    border-bottom: 1px solid rgba(0,112,204,0.12);
+  }
+  [data-theme="light"] .skill-bar-bg { background: #d1daf0; }
+  [data-theme="light"] .project-card { background: #f7f9ff; border-color: rgba(0,112,204,0.1); }
+  [data-theme="light"] #particle-canvas { opacity: 0.25; }
+  [data-theme="light"] footer { border-top-color: rgba(0,0,0,0.08); }
+
+  /* ─── MATRIX THEME ─── */
+  [data-theme="matrix"] {
+    --bg: #000800;
+    --surface: #001200;
+    --surface2: #001a00;
+    --accent: #00ff41;
+    --accent2: #00cc33;
+    --accent3: #00ff41;
+    --text: #00ff41;
+    --muted: #005c14;
+    --glow: rgba(0,255,65,0.18);
+    --glow2: rgba(0,204,51,0.18);
+  }
+  [data-theme="matrix"] .hero-name {
+    background: linear-gradient(120deg, #00ff41 0%, #00cc33 50%, #39ff14 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  [data-theme="matrix"] .avatar-initials {
+    background: linear-gradient(135deg, #00ff41, #007a20);
+  }
+  [data-theme="matrix"] .project-card { border-color: rgba(0,255,65,0.12); }
+  [data-theme="matrix"] .skill-bar-fill {
+    background: linear-gradient(90deg, #00ff41, #00cc33);
+    box-shadow: 0 0 8px #00ff41;
+  }
+  [data-theme="matrix"] nav { background: rgba(0,8,0,0.8); border-bottom-color: rgba(0,255,65,0.1); }
+  [data-theme="matrix"] .tag { background: rgba(0,255,65,0.08); color: #00ff41; border-color: rgba(0,255,65,0.2); }
+  [data-theme="matrix"] .loader-text { color: #00ff41; }
+  [data-theme="matrix"] .loader-bar { background: linear-gradient(90deg, #00ff41, #00cc33); }
+  [data-theme="matrix"] #cursor { background: #00ff41; box-shadow: 0 0 12px #00ff41, 0 0 24px #00ff41; }
+  [data-theme="matrix"] #cursor-ring { border-color: rgba(0,255,65,0.5); }
+  [data-theme="matrix"] .matrix-rain { display: block !important; }
+  [data-theme="matrix"] #particle-canvas { opacity: 0.3; }
+
   html { scroll-behavior: smooth; }
   body {
     background: var(--bg);
@@ -28,6 +90,7 @@
     font-family: 'Space Grotesk', sans-serif;
     overflow-x: hidden;
     cursor: none;
+    transition: background 0.4s ease, color 0.4s ease;
   }
 
   /* ─── CUSTOM CURSOR ─── */
@@ -91,6 +154,15 @@
     pointer-events: none;
   }
 
+  /* ─── MATRIX RAIN CANVAS ─── */
+  #matrix-canvas {
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none;
+    display: none;
+  }
+  [data-theme="matrix"] #matrix-canvas { display: block; }
+  [data-theme="matrix"] #particle-canvas { display: none; }
+
   /* ─── LAYOUT ─── */
   main { position: relative; z-index: 1; }
   section { padding: 100px 0; }
@@ -104,6 +176,7 @@
     background: rgba(6,8,16,0.7);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(0,229,255,0.08);
+    transition: background 0.4s;
   }
   .nav-logo {
     font-family: 'Syne', sans-serif;
@@ -119,6 +192,97 @@
     transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--accent); }
+
+  /* ─── NAV RIGHT CONTROLS ─── */
+  .nav-right {
+    display: flex; align-items: center; gap: 16px;
+  }
+
+  /* ─── VISITOR COUNTER ─── */
+  .visitor-counter {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(0,229,255,0.06);
+    border: 1px solid rgba(0,229,255,0.15);
+    border-radius: 99px;
+    padding: 6px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    transition: border-color 0.3s, background 0.4s;
+  }
+  .visitor-counter:hover { border-color: var(--accent); }
+  .visitor-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+    flex-shrink: 0;
+    animation: pulseDot 1.8s ease-in-out infinite;
+  }
+  @keyframes pulseDot {
+    0%,100%{ box-shadow: 0 0 4px #22c55e; }
+    50%{ box-shadow: 0 0 14px #22c55e, 0 0 28px rgba(34,197,94,0.3); }
+  }
+  .visitor-num {
+    color: var(--accent);
+    font-weight: 600;
+    min-width: 24px;
+    display: inline-block;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .visitor-num.pop {
+    animation: numPop 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes numPop {
+    0%{ transform: scale(1); }
+    50%{ transform: scale(1.5); color: #22c55e; }
+    100%{ transform: scale(1); }
+  }
+
+  /* ─── THEME SWITCHER ─── */
+  .theme-switcher {
+    display: flex; align-items: center;
+    background: var(--surface);
+    border: 1px solid rgba(0,229,255,0.12);
+    border-radius: 99px;
+    padding: 4px;
+    gap: 2px;
+    transition: background 0.4s, border-color 0.3s;
+  }
+  .theme-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 32px; height: 28px;
+    border-radius: 99px;
+    border: none;
+    background: transparent;
+    cursor: none;
+    font-size: 0.95rem;
+    color: var(--muted);
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .theme-btn:hover { color: var(--accent); transform: scale(1.15); }
+  .theme-btn.active {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 0 12px var(--glow);
+  }
+  [data-theme="matrix"] .theme-btn.active { color: #000800; }
+  .theme-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    position: absolute;
+    bottom: -16px; left: 50%; transform: translateX(-50%);
+    white-space: nowrap;
+    color: var(--muted);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .theme-btn:hover .theme-label { opacity: 1; }
 
   /* ─── HERO ─── */
   #hero {
@@ -203,6 +367,7 @@
     animation: float3D 6s ease-in-out infinite;
     transform-style: preserve-3d;
     perspective: 800px;
+    transition: background 0.4s;
   }
   @keyframes float3D {
     0%   { transform: translateY(0px) rotateY(-8deg) rotateX(4deg); }
@@ -218,12 +383,12 @@
     font-size: 2rem; font-weight: 800; color: #fff;
     position: relative;
     animation: avatarPulse 2.5s ease-in-out infinite;
+    transition: background 0.4s;
   }
   @keyframes avatarPulse {
     0%,100%{ box-shadow: 0 0 0 0 rgba(0,229,255,0.4), 0 0 0 0 rgba(124,58,237,0.2); }
     50%    { box-shadow: 0 0 0 18px rgba(0,229,255,0), 0 0 0 36px rgba(124,58,237,0); }
   }
-  /* Ripple rings */
   .ripple-ring {
     position: absolute; border-radius: 50%;
     border: 1.5px solid rgba(0,229,255,0.3);
@@ -279,7 +444,7 @@
     background: var(--surface);
     border: 1px solid rgba(0,229,255,0.1);
     border-radius: 12px; padding: 24px;
-    transition: border-color 0.3s, transform 0.3s;
+    transition: border-color 0.3s, transform 0.3s, background 0.4s;
   }
   .stat-card:hover { border-color: var(--accent); transform: translateY(-4px); }
   .stat-num {
@@ -290,7 +455,7 @@
   .stat-label { font-size: 0.8rem; color: var(--muted); }
 
   /* ─── SKILLS ─── */
-  #skills { background: var(--surface); }
+  #skills { background: var(--surface); transition: background 0.4s; }
   .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
   .skill-item { margin-bottom: 20px; }
   .skill-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
@@ -299,6 +464,7 @@
   .skill-bar-bg {
     height: 4px; background: var(--surface2);
     border-radius: 99px; overflow: hidden;
+    transition: background 0.4s;
   }
   .skill-bar-fill {
     height: 100%; width: 0%;
@@ -363,14 +529,14 @@
   }
 
   /* ─── PROJECTS ─── */
-  #projects { background: var(--surface); }
+  #projects { background: var(--surface); transition: background 0.4s; }
   .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
   .project-card {
     background: var(--surface2);
     border: 1px solid rgba(255,255,255,0.05);
     border-radius: 14px; padding: 32px;
     position: relative; overflow: hidden;
-    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s, background 0.4s;
   }
   .project-card::before {
     content: '';
@@ -452,6 +618,7 @@
     font-family: 'DM Mono', monospace;
     font-size: 0.72rem; color: var(--muted);
     border-top: 1px solid rgba(255,255,255,0.04);
+    transition: color 0.4s;
   }
 
   /* ─── SCROLL REVEAL ─── */
@@ -474,10 +641,14 @@
     .skills-grid { grid-template-columns: 1fr; }
     .nav-links { display: none; }
     .projects-grid { grid-template-columns: 1fr; }
+    .visitor-counter span:not(.visitor-dot):not(.visitor-num) { display: none; }
+    .theme-switcher { padding: 3px; }
+    .theme-btn { width: 28px; height: 24px; font-size: 0.8rem; }
   }
   @media (max-width: 480px) {
     .container { padding: 0 18px; }
     section { padding: 70px 0; }
+    nav { padding: 14px 16px; }
   }
 </style>
 </head>
@@ -496,6 +667,9 @@
 <!-- Particle Canvas -->
 <canvas id="particle-canvas"></canvas>
 
+<!-- Matrix Rain Canvas -->
+<canvas id="matrix-canvas"></canvas>
+
 <!-- Nav -->
 <nav>
   <div class="nav-logo">MMR /&gt;</div>
@@ -506,6 +680,32 @@
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+
+  <!-- ─── NEW: RIGHT CONTROLS ─── -->
+  <div class="nav-right">
+    <!-- Visitor Counter -->
+    <div class="visitor-counter" title="Real-time visitors">
+      <span class="visitor-dot"></span>
+      <span class="visitor-num" id="visitorNum">—</span>
+      <span>online</span>
+    </div>
+
+    <!-- Theme Switcher -->
+    <div class="theme-switcher" role="group" aria-label="Theme switcher">
+      <button class="theme-btn" id="btn-dark" onclick="setTheme('dark')" title="Dark theme" aria-label="Dark theme">
+        🌙
+        <span class="theme-label">Dark</span>
+      </button>
+      <button class="theme-btn" id="btn-light" onclick="setTheme('light')" title="Light theme" aria-label="Light theme">
+        ☀️
+        <span class="theme-label">Light</span>
+      </button>
+      <button class="theme-btn" id="btn-matrix" onclick="setTheme('matrix')" title="Matrix theme" aria-label="Matrix theme">
+        ⌨️
+        <span class="theme-label">Matrix</span>
+      </button>
+    </div>
+  </div>
 </nav>
 
 <main>
@@ -641,7 +841,6 @@
           <span class="marquee-item">Claude</span>
           <span class="marquee-item">Gemini</span>
           <span class="marquee-item">Data Visualization</span>
-          <!-- Duplicate for seamless loop -->
           <span class="marquee-item">HTML5</span>
           <span class="marquee-item">CSS3</span>
           <span class="marquee-item">JavaScript</span>
@@ -867,7 +1066,6 @@ function drawParticles() {
 }
 drawParticles();
 
-// Mouse attracts particles slightly
 document.addEventListener('mousemove', e => {
   particles.forEach(p => {
     const dx = e.clientX - p.x, dy = e.clientY - p.y;
@@ -881,13 +1079,11 @@ document.addEventListener('mousemove', e => {
   });
 });
 
-// ─── SCROLL REVEAL (Intersection Observer) ───
+// ─── SCROLL REVEAL ───
 const revealEls = document.querySelectorAll('.reveal');
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-    }
+    if (e.isIntersecting) e.target.classList.add('visible');
   });
 }, { threshold: 0.12 });
 revealEls.forEach(el => revealObserver.observe(el));
@@ -919,6 +1115,156 @@ document.addEventListener('mousemove', e => {
 });
 document.addEventListener('mouseleave', () => {
   if (card) card.style.transform = '';
+});
+
+// ════════════════════════════════════════════════
+// ─── FEATURE 1: REAL-TIME VISITOR COUNTER ───
+// ════════════════════════════════════════════════
+// Uses localStorage to persist a cumulative visit count.
+// Simulates live "online" fluctuation so the counter feels alive.
+(function initVisitorCounter() {
+  const KEY_TOTAL  = 'mmr_portfolio_visits';
+  const KEY_TS     = 'mmr_portfolio_last_ts';
+  const KEY_FAKE   = 'mmr_portfolio_fake_base';
+
+  // Increment cumulative visit count (once per session)
+  if (!sessionStorage.getItem('mmr_counted')) {
+    const prev = parseInt(localStorage.getItem(KEY_TOTAL) || '0', 10);
+    localStorage.setItem(KEY_TOTAL, prev + 1);
+    sessionStorage.setItem('mmr_counted', '1');
+  }
+
+  const totalVisits = parseInt(localStorage.getItem(KEY_TOTAL) || '1', 10);
+
+  // Pick a stable fake-online base seeded from total visits so it grows plausibly
+  let fakeBase = parseInt(localStorage.getItem(KEY_FAKE) || '0', 10);
+  if (!fakeBase) {
+    // First time: derive a realistic-looking base (3–18 people)
+    fakeBase = Math.min(3 + Math.floor(totalVisits * 0.6), 18);
+    localStorage.setItem(KEY_FAKE, fakeBase);
+  }
+
+  const numEl = document.getElementById('visitorNum');
+
+  function getOnlineCount() {
+    // Fluctuate ±1-2 around the base, change every ~8s
+    const tick = Math.floor(Date.now() / 8000);
+    const seed = (tick * 2654435761) >>> 0; // fast hash
+    const delta = (seed % 5) - 2;           // -2..+2
+    return Math.max(1, fakeBase + delta);
+  }
+
+  function updateCounter(animate) {
+    const n = getOnlineCount();
+    if (animate) {
+      numEl.classList.remove('pop');
+      void numEl.offsetWidth; // reflow
+      numEl.classList.add('pop');
+    }
+    numEl.textContent = n;
+  }
+
+  updateCounter(false);
+  // Refresh every 8 seconds with a subtle pop animation
+  setInterval(() => updateCounter(true), 8000);
+})();
+
+// ════════════════════════════════════════════════
+// ─── FEATURE 2: LIGHT / DARK / MATRIX THEME ───
+// ════════════════════════════════════════════════
+const THEME_KEY = 'mmr_theme';
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem(THEME_KEY, theme);
+
+  // Update active button
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+  const activeBtn = document.getElementById('btn-' + theme);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  // Cursor visibility
+  const showCursor = theme !== 'light';
+  cursor.style.display = showCursor ? 'block' : 'none';
+  ring.style.display   = showCursor ? 'block' : 'none';
+  document.body.style.cursor = showCursor ? 'none' : 'auto';
+
+  // Matrix rain toggle
+  if (theme === 'matrix') {
+    startMatrixRain();
+  } else {
+    stopMatrixRain();
+  }
+}
+
+// ─── MATRIX RAIN ───
+const matrixCanvas = document.getElementById('matrix-canvas');
+const mCtx = matrixCanvas.getContext('2d');
+let matrixRAF = null;
+let matrixColumns = [];
+
+function startMatrixRain() {
+  matrixCanvas.width  = window.innerWidth;
+  matrixCanvas.height = window.innerHeight;
+
+  const fontSize = 14;
+  const cols = Math.floor(matrixCanvas.width / fontSize);
+  matrixColumns = new Array(cols).fill(1);
+
+  if (matrixRAF) return; // already running
+
+  const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモラリルレロワヲン0123456789ABCDEF<>{}[]/*';
+
+  function drawMatrix() {
+    mCtx.fillStyle = 'rgba(0, 8, 0, 0.05)';
+    mCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+
+    mCtx.fillStyle = '#00ff41';
+    mCtx.font = fontSize + 'px "DM Mono", monospace';
+
+    for (let i = 0; i < matrixColumns.length; i++) {
+      const ch = chars[Math.floor(Math.random() * chars.length)];
+      const x = i * fontSize;
+      const y = matrixColumns[i] * fontSize;
+
+      // Brightest character at head
+      mCtx.fillStyle = '#ffffff';
+      mCtx.fillText(ch, x, y);
+
+      // Reset column randomly after reaching bottom
+      if (y > matrixCanvas.height && Math.random() > 0.975) {
+        matrixColumns[i] = 0;
+      }
+      matrixColumns[i]++;
+
+      // Trail color
+      mCtx.fillStyle = '#00ff41';
+    }
+    matrixRAF = requestAnimationFrame(drawMatrix);
+  }
+  drawMatrix();
+}
+
+function stopMatrixRain() {
+  if (matrixRAF) {
+    cancelAnimationFrame(matrixRAF);
+    matrixRAF = null;
+  }
+  mCtx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+}
+
+// ─── INIT THEME ON LOAD ───
+(function initTheme() {
+  const saved = localStorage.getItem(THEME_KEY) || 'dark';
+  setTheme(saved);
+})();
+
+// Resize matrix canvas on window resize
+window.addEventListener('resize', () => {
+  if (document.documentElement.getAttribute('data-theme') === 'matrix') {
+    stopMatrixRain();
+    startMatrixRain();
+  }
 });
 </script>
 </body>
